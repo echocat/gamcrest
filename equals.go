@@ -7,21 +7,28 @@ import (
 func Equals(expected interface{}) *EqualsMatcher {
 	return &EqualsMatcher{
 		Expected:                       expected,
-		ExpectedStateDescriptionPrefix: "equals",
+		ExpectedStateDescriptionPrefix: "equals ",
 	}
 }
 
 func IsEqual(expected interface{}) *EqualsMatcher {
 	return &EqualsMatcher{
 		Expected:                       expected,
-		ExpectedStateDescriptionPrefix: "is equal",
+		ExpectedStateDescriptionPrefix: "is equal ",
 	}
 }
 
 func IsEqualTo(expected interface{}) *EqualsMatcher {
 	return &EqualsMatcher{
 		Expected:                       expected,
-		ExpectedStateDescriptionPrefix: "is equal to",
+		ExpectedStateDescriptionPrefix: "is equal to ",
+	}
+}
+
+func EqualTo(expected interface{}) *EqualsMatcher {
+	return &EqualsMatcher{
+		Expected:                       expected,
+		ExpectedStateDescriptionPrefix: "equal to ",
 	}
 }
 
@@ -34,7 +41,7 @@ func (instance EqualsMatcher) Test(actual interface{}) (MatchResult, error) {
 	return &StaticMatchResult{
 		Value: instance.test(actual),
 		Description: BuildDescription().
-			AppendMessage("%s ", instance.ExpectedStateDescriptionPrefix).
+			AppendMessage(instance.ExpectedStateDescriptionPrefix).
 			AppendValue(instance.Expected),
 		MismatchDescription: BuildDescription().
 			AppendMessage("but was ").
